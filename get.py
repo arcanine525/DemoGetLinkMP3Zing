@@ -1,9 +1,11 @@
 import json
 import requests
 import sys
+import base64
 import re # import regular expression
 
 oriLink = sys.argv[1]
+
 #oriLink = 'http://mp3.zing.vn/bai-hat/Xin-Dung-Lang-Im-Soobin-Hoang-Son/ZW80B6I8.html'
 
 requestLink = requests.get(oriLink)
@@ -67,9 +69,10 @@ headers = {
 res = requests.get(linkXML, headers=headers, cookies=cookies).text
 
 data = json.loads(res)
-
+gdata = data['data'][0]['name']
 link128 = data['data'][0]['source_list'][0]
 
 print (link128)
+
 #print ('Link XML get duoc: '+linkXML)
 #print (data)

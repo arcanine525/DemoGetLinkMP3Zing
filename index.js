@@ -2,7 +2,7 @@ var express = require('express');
 var app = express();
 var bodyParser = require('body-parser')
 var urlencodedParser = bodyParser.urlencoded({ extended: false })
-
+var request = require('request');
 
 var myPythonScriptPath = 'get.py';
 var PythonShell = require('python-shell');
@@ -10,6 +10,7 @@ var PythonShell = require('python-shell');
 
 app.get("/link", function(req, res){
     var options = {
+    mode: 'text',
     args: 'http://mp3.zing.vn/bai-hat/Xin-Dung-Lang-Im-Soobin-Hoang-Son/ZW80B6I8.html'
     //args: linkToGet
     };
@@ -18,8 +19,8 @@ app.get("/link", function(req, res){
     if (err) throw err;
     // results is an array consisting of messages collected during execution
     result = message[0];
-    res.send("Link get duoc: "+ result);
-    console.log('results: ', result);
+    res.send("Link get duoc: "+ result.toString());
+    console.log('Kết quả: ', result);
     });
 });
 
@@ -60,5 +61,7 @@ app.get("/home", function(req, res) {
 
 });
 */
+
+
 
 console.log("Start Now!")
