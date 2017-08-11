@@ -7,6 +7,14 @@ var request = require('request');
 var myPythonScriptPath = 'get.py';
 var PythonShell = require('python-shell');
 
+app.set("views engine", "ejs");
+app.set("views" , "./views");
+app.use(express.static(__dirname + '/views'))
+app.listen(process.env.PORT || 525);
+
+app.get("/home", function(req, res){
+    res.render("test", {data: "hello"});
+});
 
 app.get("/link", function(req, res){
     var options = {
@@ -17,9 +25,9 @@ app.get("/link", function(req, res){
 
     PythonShell.run('get.py', options, function (err, message) {
     if (err) throw err;
-    // results is an array consisting of messages collected during execution
     result = message[0];
-    res.send("Link get duoc: "+ result.toString());
+    //res.send("Link get được: "+ result.toString());
+    res.render("test", {data: result.toString()});
     console.log('Kết quả: ', result);
     });
 });
@@ -49,10 +57,7 @@ app.post('/login', urlencodedParser, function (req, res) {
   res.send('Welcome, ' + u + 'Your pass: ' + p )
 })
 
-app.set("view engine", "ejs");
-app.set("views", "./views");
-app.use(express.static(__dirname + '/views'))
-app.listen(process.env.PORT || 525);
+
 
 /*
 app.get("/home", function(req, res) {

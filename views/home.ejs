@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html>
+
 <head>
     <meta charset="UTF-8">
     <title>APlayer Demo</title>
@@ -8,25 +9,30 @@
         body {
             font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif;
         }
+
         .container {
             max-width: 32rem;
             margin-left: auto;
             margin-right: auto;
             margin-bottom: 50px;
         }
+
         h1 {
             font-size: 54px;
             color: #333;
             margin: 30px 0 10px;
         }
+
         h2 {
             font-size: 22px;
             color: #555;
         }
+
         h3 {
             font-size: 24px;
             color: #555;
         }
+
         hr {
             display: block;
             width: 7rem;
@@ -35,10 +41,12 @@
             background-color: #eee;
             border: 0;
         }
+
         a {
             color: #08c;
             text-decoration: none;
         }
+
         p {
             font-size: 18px;
         }
@@ -48,16 +56,40 @@
 
 <body>
     <div class="container">
-        <h1>Player</h1>
-        <h2>Wow, such a beautiful html5 music player</h2>
+        <h1>
+            <%=link128%>
+        </h1>
+        <h2>Wow,</h2>
+
         <hr>
-        <h3>Music</h3>
+        <h3>l128</h3>
         <div id="player1" class="aplayer"></div>
         <p></p>
-        
+
     </div>
-    <script src="..\node_modules\aplayer\dist\APlayer.min.js"></script>
-    <script src="demo.js"></script>
-       
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/aplayer/1.6.0/APlayer.min.js"></script>
+    
+    <script>
+        var data = "<%=link128%>";
+        var dat128 = 'http://zmp3-mp3-s1-te-zmp3-bdhcm-1.zadn.vn/3cedeac33387dad98396/8127820420268223686?key=c5Fl0Q1cc2DalLKJDZ9vPQ&expires=1502521790'
+        var ap1 = new APlayer({
+            element: document.getElementById('player1'),
+            narrow: false,
+            autoplay: true,
+            showlrc: false,
+            mutex: true,
+            theme: '#e6d0b2',
+            preload: 'metadata',
+            mode: 'circulation',
+            music: {
+                title: 'Preparation',
+                author: 'Hans Zimmer/Richard Harvey',
+                url: data,
+                pic: 'http://devtest.qiniudn.com/Preparation.jpg'
+            }
+        });
+    </script>
+
 </body>
+
 </html>
