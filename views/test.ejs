@@ -2,16 +2,44 @@
 <html>
 <body>
 
-<h2>JavaScript Variables</h2>
 
-<p>Create a variable, assign a value to it, and display it:</p>
 
-<p id="demo"></p>
+
+
+<div class="container">
+    <h1>
+        
+    </h1>
+    <h2>Wow,</h2>
+
+    <hr>
+    <h3><%=link128%></h3>
+    <div id="player1" class="aplayer"></div>
+    <p></p>
+
+</div>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/aplayer/1.6.0/APlayer.min.js"></script>
 
 <script>
-var carName = "<%=data%>";
-document.getElementById("demo").innerHTML = carName;
+    
+ 
+    
+    var ap1 = new APlayer({
+        element: document.getElementById('player1'),
+        narrow: false,
+        autoplay: true,
+        showlrc: false,
+        mutex: true,
+        theme: '#e6d0b2',
+        preload: 'metadata',
+        mode: 'circulation',
+        music: {
+            title: "<%=name%>",
+            author: '<%=artist%>',
+            url: '<%=link128%>',
+            pic: '<%=cover%>'
+        }
+    });
 </script>
-
 </body>
 </html>
