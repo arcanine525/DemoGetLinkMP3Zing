@@ -15,22 +15,23 @@ app.set("views", "./views");
 app.use(express.static(__dirname + '/views'))
 
 app.get("/test", function (req, res) {
-    
-    async function sysn(oriLink) {
-        var options = {
-            url: oriLink,
-            headers: headers,
-            gzip: 'true'
-        };
 
-        var linkXml = await getXmlLink(options);
-        var linkDownload = await getDowloadLink(options);
-        console.log("Link XML: " + linkXml);
-        console.log("Link Download: " + linkDownload);
-        res.render("test", { data: linkDownload });
-    }
+    // async function sysn(oriLink) {
+    //     var options = {
+    //         url: oriLink,
+    //         headers: headers,
+    //         gzip: 'true'
+    //     };
 
-    sysn('http://mp3.zing.vn/bai-hat/Anh-Se-Tot-Ma-Pham-Hong-Phuoc-Thuy-Chi/ZW7OOUDB.html');
+    //     var linkXml = await getXmlLink(options);
+    //     var linkDownload = await getDowloadLink(options);
+    //     console.log("Link XML: " + linkXml);
+    //     console.log("Link Download: " + linkDownload);
+    //     res.render("test", { data: linkDownload });
+    // }
+
+    // sysn('http://mp3.zing.vn/bai-hat/Anh-Se-Tot-Ma-Pham-Hong-Phuoc-Thuy-Chi/ZW7OOUDB.html');
+    res.render("testPlayer", {data: "http://mp3.zing.vn/download/song/Anh-Se-Tot-Ma-Pham-Hong-Phuoc-Thuy-Chi-Pham-Hong-Phuoc-Thuy-Chi/ZHcnyLHaWzdcCJdyIOeeroKKtFGkmtkWnvazRzaS?sig=8c309b730ade222639e83ce3e17863b4"});
 
 })
 
