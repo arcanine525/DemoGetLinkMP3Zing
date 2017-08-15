@@ -1,0 +1,19 @@
+<!doctype html>
+<html>
+	<head>
+		<meta charset="UTF-8">
+		<title>Download HTML Text File Blob Demo</title>
+		<style>
+			body{ font: menu; }
+		</style>
+		<script src='//js.zapjs.com/js/download.js'></script>
+	</head>
+	<body>
+		<h1>Download HTML File Blob Demo</h1>
+		<main></main>
+		<script>
+	  download(new Blob(["hello world".bold()]), "dlHtmlBlob.html", "text/html");
+		</script>
+	</body>
+
+</html>

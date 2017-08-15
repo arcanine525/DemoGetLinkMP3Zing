@@ -34,6 +34,47 @@ function getXmlLink(options) {
     })
 }
 
+function getData(options) {
+    return new Promise((resolve, reject) => {
+        request(options, function (error, response, body) {
+            if (!error && response.statusCode == 200) {
+                //var link = body;
+                //console.log(body);
+                data = JSON.parse(body)['data']['128']['link'];
+                dlink = 'http://mp3.zing.vn' + data;
+                resolve(dlink);
+            }
+        });
+
+    });
+}
+
+function getInfo(options) {
+    return new Promise((resolve, reject) => {
+        request(options, function (error, response, body) {
+            if (!error && response.statusCode == 200) {
+                data = JSON.parse(body)["data"][0];
+                resolve(data);
+            }
+        });
+
+    });
+}
+
+
+/*
+function getFileContent(options) {
+    return new Promise((resolve, reject) => {
+        request(options, function (error, response, body) {
+            if (!error && response.statusCode == 200) {
+                //var link = body;
+                //console.log(body);
+                resolve(body);
+            }
+        });
+    });
+}
+*/
 async function sysn(oriLink) {
     var options = {
         url: oriLink,
@@ -43,10 +84,43 @@ async function sysn(oriLink) {
 
     var linkXml = await getXmlLink(options);
     var linkDownload = await getDowloadLink(options);
+
+    var opDownload = {
+        url: linkDownload,
+        headers: headers,
+        gzip: 'true'
+    }
+
+    var opXml = {
+        url: linkXml,
+        headers: headers,
+        gzip: 'true'
+    };
     console.log("Link XML: " + linkXml);
     console.log("Link Download: " + linkDownload);
+    var data = await getData(opDownload);
+    console.log("Data get dc: " + data);
+
+    var info = await getInfo(opXml);
+    let name = info["name"];
+    let cover = info["cover"]
+    console.log("NAME: " + name);
+    console.log("COVER: " + cover);
 }
 
-sysn('http://mp3.zing.vn/bai-hat/Anh-Se-Tot-Ma-Pham-Hong-Phuoc-Thuy-Chi/ZW7OOUDB.html'); 
+sysn("http://mp3.zing.vn/bai-hat/Yeu-La-Tha-Thu-Em-Chua-18-OST-OnlyC/ZW7DAIDA.html");
 
+// var o = {
+//     url: 'http://mp3.zing.vn/download/song/Yeu-La-Tha-Thu-Em-Chua-18-OST-OnlyC-OnlyC/ZGcmykmahLFZRAXtkFJtbmZGyZpmFsiCvhd?sig=a4a3c42491777d324012295ffd5ba32e',
+//     headers: headers,
+//     gzip: 'true'
+// };
 
+// function callData(error, response, body) {
+//     if (!error && response.statusCode == 200) {
+
+//         console.log(body);
+//     }
+// }
+
+// request(o, callData);

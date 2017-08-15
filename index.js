@@ -16,22 +16,44 @@ app.use(express.static(__dirname + '/views'))
 
 app.get("/test", function (req, res) {
 
-    // async function sysn(oriLink) {
-    //     var options = {
-    //         url: oriLink,
-    //         headers: headers,
-    //         gzip: 'true'
-    //     };
+    async function sysn(oriLink) {
+        let options = {
+            url: oriLink,
+            headers: headers,
+            gzip: 'true'
+        };
 
-    //     var linkXml = await getXmlLink(options);
-    //     var linkDownload = await getDowloadLink(options);
-    //     console.log("Link XML: " + linkXml);
-    //     console.log("Link Download: " + linkDownload);
-    //     res.render("test", { data: linkDownload });
-    // }
+        let linkXml = await getXmlLink(options);
+        let linkDownload = await getDowloadLink(options);
 
-    // sysn('http://mp3.zing.vn/bai-hat/Anh-Se-Tot-Ma-Pham-Hong-Phuoc-Thuy-Chi/ZW7OOUDB.html');
-    res.render("testPlayer", {data: "http://mp3.zing.vn/download/song/Anh-Se-Tot-Ma-Pham-Hong-Phuoc-Thuy-Chi-Pham-Hong-Phuoc-Thuy-Chi/ZHcnyLHaWzdcCJdyIOeeroKKtFGkmtkWnvazRzaS?sig=8c309b730ade222639e83ce3e17863b4"});
+        let opDownload = {
+            url: linkDownload,
+            headers: headers,
+            gzip: 'true'
+        }
+
+        let opXml = {
+            url: linkXml,
+            headers: headers,
+            gzip: 'true'
+        };
+        console.log("Link XML: " + linkXml);
+        console.log("Link Download: " + linkDownload);
+        var data = await getData(opDownload);
+        console.log("Data get dc: " + data);
+
+        let info = await getInfo(opXml);
+        let name = info["name"];
+        let cover = info["cover"]
+        let artist = info["artist"]
+        // console.log("NAME: " + name);
+        // console.log("COVER: " + cover);
+        res.render("testPlayer", { name: name, cover: cover, artist: artist, data: data });
+    }
+
+    sysn('http://mp3.zing.vn/bai-hat/Anh-Se-Tot-Ma-Pham-Hong-Phuoc-Thuy-Chi/ZW7OOUDB.html');
+
+
 
 })
 
@@ -122,6 +144,33 @@ function getXmlLink(options) {
             }
         })
     })
+}
+
+function getData(options) {
+    return new Promise((resolve, reject) => {
+        request(options, function (error, response, body) {
+            if (!error && response.statusCode == 200) {
+                //var link = body;
+                //console.log(body);
+                data = JSON.parse(body)['data']['128']['link'];
+                dlink = 'http://mp3.zing.vn' + data;
+                resolve(dlink);
+            }
+        });
+
+    });
+}
+
+function getInfo(options) {
+    return new Promise((resolve, reject) => {
+        request(options, function (error, response, body) {
+            if (!error && response.statusCode == 200) {
+                data = JSON.parse(body)["data"][0];
+                resolve(data);
+            }
+        });
+
+    });
 }
 
 
