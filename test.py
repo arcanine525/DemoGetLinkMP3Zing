@@ -35,13 +35,13 @@ cookies = {
 headers = {
     #'Accept-Encoding': 'gzip, deflate',
     #'Accept-Language': 'vi,en-US;q=0.8,en;q=0.6',
-  #  'User-Agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/60.0.3112.90 Safari/537.36',
-   # 'Accept': '*/*',
+    #  'User-Agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/60.0.3112.90 Safari/537.36',
+    # 'Accept': '*/*',
     'Referer': 'http://mp3.zing.vn/bai-hat/Xin-Dung-Lang-Im-Soobin-Hoang-Son/ZW80B6I8.html',
     'X-Requested-With': 'XMLHttpRequest',
     'Connection': 'keep-alive',
 }
-
-res = requests.get('http://mp3.zing.vn/json/song/get-source/kGxmTZGaXdbBadCtkbctFGkm', headers=headers, cookies=cookies).text
-
-print (res)
+url = "http://mp3.zing.vn/download/song/Yeu-La-Tha-Thu-Em-Chua-18-OST-OnlyC-OnlyC/kmJmtZnshLbkiSXtdFGyFHLHyZWHbJaVQQs?sig=90f32aa2e2549b54d26540df9c8a4c66"
+#res = requests.get(url,headers=headers, cookies=cookies, ).headers['location']
+res = requests.get(url, headers=headers, cookies=cookies, allow_redirects=False).headers
+print(res)

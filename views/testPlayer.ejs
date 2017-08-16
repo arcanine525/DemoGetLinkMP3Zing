@@ -1,37 +1,41 @@
 <!DOCTYPE html>
 <html>
+
 <body>
-<div class="container">
-    <h1>
-        
-    </h1>
-    <h2>Wow,</h2>
+    <div class="container">
+        <h1>
 
-    <hr>
-    <h3><%=data%></h3>
-    <div id="player1" class="aplayer"></div>
-    <p></p>
+        </h1>
+        <h2>Wow,</h2>
 
-</div>
-<script src="https://cdnjs.cloudflare.com/ajax/libs/aplayer/1.6.0/APlayer.min.js"></script>
+        <hr>
+        <h3>
+            <%=data%>
+        </h3>
+        <div id="player1" class="aplayer"></div>
+        <p></p>
+    </div>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/aplayer/1.6.0/APlayer.min.js"></script>
 
-<script>   
-    var ap1 = new APlayer({
-        element: document.getElementById('player1'),
-        narrow: false,
-        autoplay: true,
-        showlrc: false,
-        mutex: true,
-        theme: '#e6d0b2',
-        preload: 'metadata',
-        mode: 'circulation',
-        music: {
-            title: "<%=name%>",
-            author: "<%=artist%>",
-            url: "<%=data%>",
-            pic: "<%=cover%>"
-        }
-    });
-</script>
+    <script>
+        var ap1 = new APlayer({
+            element: document.getElementById('player1'),
+            narrow: false,
+            autoplay: true,
+            showlrc: false,
+            mutex: true,
+            theme: '#e6d0b2',
+            preload: 'metadata',
+            mode: 'circulation',
+            music: {
+                title: "<%=name%>",
+                author: "<%=artist%>",
+                url: "<%=data%>",
+                pic: "<%=cover%>"
+            }
+        });
+
+    </script>
 </body>
+
 </html>

@@ -37,8 +37,8 @@ app.get("/test", function (req, res) {
             headers: headers,
             gzip: 'true'
         };
-        console.log("Link XML: " + linkXml);
-        console.log("Link Download: " + linkDownload);
+        //console.log("Link XML: " + linkXml);
+        //console.log("Link Download: " + linkDownload);
         var data = await getData(opDownload);
         console.log("Data get dc: " + data);
 
@@ -53,12 +53,51 @@ app.get("/test", function (req, res) {
 
     sysn('http://mp3.zing.vn/bai-hat/Anh-Se-Tot-Ma-Pham-Hong-Phuoc-Thuy-Chi/ZW7OOUDB.html');
 
-
-
 })
 
+app.post('/test', urlencodedParser, function (req, res) {
+    // var u = req.body.username;
+    // var p = req.body.pass;
+    var linkDown = req.body.link;
+    async function sysn(oriLink) {
+        let options = {
+            url: oriLink,
+            headers: headers,
+            gzip: 'true'
+        };
 
+        let linkXml = await getXmlLink(options);
+        let linkDownload = await getDowloadLink(options);
 
+        let opDownload = {
+            url: linkDownload,
+            headers: headers,
+            gzip: 'true'
+        }
+
+        let opXml = {
+            url: linkXml,
+            headers: headers,
+            gzip: 'true'
+        };
+        console.log("Link XML: " + linkXml);
+        console.log("Link Download: " + linkDownload);
+        var data = await getData(opDownload);
+        console.log("Data get dc: " + data);
+
+        let info = await getInfo(opXml);
+        let name = info["name"];
+        let cover = info["cover"]
+        let artist = info["artist"]
+        // console.log("NAME: " + name);
+        // console.log("COVER: " + cover);
+        res.render("testPlayer", { name: name, cover: cover, artist: artist, data: data });
+    }
+
+    sysn(linkDown);
+
+    //res.send('Welcome, ' + u + 'Your pass: ' + p)
+})
 
 
 /*
@@ -97,13 +136,6 @@ app.get('/api', function (req, res) {
 });
 
 // POST /login gets urlencoded bodies
-app.post('/login', urlencodedParser, function (req, res) {
-    var u = req.body.username;
-    var p = req.body.pass;
-    res.send('Welcome, ' + u + 'Your pass: ' + p)
-})
-
-
 
 /*
 app.get("/home", function(req, res) {
@@ -152,7 +184,7 @@ function getData(options) {
             if (!error && response.statusCode == 200) {
                 //var link = body;
                 //console.log(body);
-                data = JSON.parse(body)['data']['128']['link'];
+                data = JSON.parse(body)['data']['320']['link'];
                 dlink = 'http://mp3.zing.vn' + data;
                 resolve(dlink);
             }
