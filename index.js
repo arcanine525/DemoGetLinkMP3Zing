@@ -91,6 +91,76 @@ app.get("/home", function(req, res){
     res.render("test");
 })
 
+app.get("/api", function(req, res){
+    var linkToGet = req.query.link;
+
+        
+async function sysn(oriLink, headers) {
+    let options = {
+        url: oriLink,
+        headers: headers,
+        gzip: 'true'
+    };
+
+    let linkXml = await getXmlLink(options);
+    let linkDownload = await getDowloadLink(options);
+
+    let optionDownload = {
+        url: linkDownload,
+        headers: headers,
+        gzip: 'true'
+    }
+
+    let optionInfo = {
+        url: linkXml,
+        headers: headers,
+        gzip: 'true'
+    };
+
+    let sourceLink = await getSourceLink(optionDownload);
+    let info = await getInfo(optionInfo);
+    let name = info["name"];
+    let cover = info["cover"]
+    let artist = info["artist"]
+
+    let link320 = await getDirectLink(o = {
+        url: 'http://mp3.zing.vn' + sourceLink['320']['link'],
+        headers: headers,
+        gzip: 'true'
+    })
+    let link128 = await getDirectLink(o = {
+        url: 'http://mp3.zing.vn' + sourceLink['128']['link'],
+        headers: headers,
+        gzip: 'true'
+    })
+    let lossless = await getDirectLink(o = {
+        url: 'http://mp3.zing.vn' + sourceLink['lossless']['link'],
+        headers: headers,
+        gzip: 'true'
+    })
+
+    let arrLink = [link128, link320, lossless];
+    console.log("NAME: " + name);
+    console.log("COVER: " + cover);
+    console.log("ARTIST: " + artist);
+    console.log(arrLink);
+    
+    res.render("testPlayer", {
+        name: name,
+        cover: cover,
+        artist: artist,
+        link128: link128,
+        link320: link320,
+        lossless: lossless,
+        data: 'http://mp3.zing.vn' + sourceLink['128']['link']
+    });
+    console.log('DONE');
+}
+
+    sysn(linkToGet, MyHeaders);
+
+})
+
 /*
 app.get("/link", function (req, res) {
     var options = {
