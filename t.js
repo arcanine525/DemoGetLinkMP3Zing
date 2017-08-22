@@ -144,8 +144,8 @@ async function getMp3Info(options) {
         headers: MyHeaders,
         gzip: 'true'
     })
+    console.log(info)
     return Promise.resolve(info)
-
 }
 
 
@@ -156,31 +156,44 @@ async function getMp3DownloadLink(options, headers) {
         headers: headers,
         gzip: 'true'
     })
-    //console.log(sourceLink)
-    //return Promise.resolve(sourceLink)
-    let arrLink = await Promise.all([getDirectLink(o = {
-        url: 'http://mp3.zing.vn' + sourceLink['128']['link'],
-        headers: headers,
-        gzip: 'true'
-    }),
-    getDirectLink(o = {
-        url: 'http://mp3.zing.vn' + sourceLink['320']['link'],
-        headers: headers,
-        gzip: 'true'
-    }),
-    getDirectLink(o = {
-        url: 'http://mp3.zing.vn' + sourceLink['lossless']['link'],
-        headers: headers,
-        gzip: 'true'
-    })])
-    return Promise.resolve(arrLink);
+    // let dlink = await getDirectLink(o = {
+    //     url: 'http://mp3.zing.vn' + sourceLink['lossless']['link'],
+    //     headers: headers,
+    //     gzip: 'true'
+    // })
+    console.log(sourceLink);
+    // console.log(sourceLink)
+    // return Promise.resolve(sourceLink)
+    // let arrLink = await Promise.all([getDirectLink(o = {
+    //     url: 'http://mp3.zing.vn' + sourceLink['128']['link'],
+    //     headers: headers,
+    //     gzip: 'true'
+    // }),
+    // getDirectLink(o = {
+    //     url: 'http://mp3.zing.vn' + sourceLink['320']['link'],
+    //     headers: headers,
+    //     gzip: 'true'
+    // }),
+    // getDirectLink(o = {
+    //     url: 'http://mp3.zing.vn' + sourceLink['lossless']['link'],
+    //     headers: headers,
+    //     gzip: 'true'
+    // })])
+    // console.log(arrLink)
+    // return Promise.resolve(arrLink);
+
 }
 
 async function sysnAll(options, headers) {
+
     let info = await getMp3Info(options);
     let arrLink = await getMp3DownloadLink(options, headers);
     console.log(info['name'])
     console.log("LINK: " + arrLink[2])
+    // let data = await Promise.all([getMp3Info(options), getMp3DownloadLink(options, headers)]);
+    // console.log(data[0]);
 
 }
-sysnAll(options, MyHeaders);
+getMp3DownloadLink(options, MyHeaders);
+//sysnAll(options, MyHeaders);
+//getMp3Info(options);
