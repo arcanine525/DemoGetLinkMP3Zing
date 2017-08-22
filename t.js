@@ -1,4 +1,5 @@
 var request = require('request');
+var reqFast = require('req-fast');
 var oriLink = 'http://mp3.zing.vn/bai-hat/Xin-Dung-Lang-Im-Soobin-Hoang-Son/ZW80B6I8.html'
 var MyHeaders = {
     'X-Requested-With': 'XMLHttpRequest',
@@ -63,13 +64,16 @@ function getInfo(options) {
 
 function getDirectLink(options) {
     return new Promise((resolve, reject) => {
-        request(options, function (error, response, body) {
-            if (!error && response.statusCode == 200) {
-                let link = response.request["uri"]["href"]
-                //console.log("GET DC LINK LA: " + response.request["uri"]["href"]);
-                resolve(link);
-            }
-        });
+        var op = {
+            url: options.url,
+            headers: options.headers,
+            maxRedirects: 1
+        };
+        reqFast(op, function(error, response){
+        
+            resolve(response.redirects.toString());
+
+        })
     });
 }
 
@@ -161,26 +165,26 @@ async function getMp3DownloadLink(options, headers) {
     //     headers: headers,
     //     gzip: 'true'
     // })
-    console.log(sourceLink);
+    // console.log(dlink);
     // console.log(sourceLink)
     // return Promise.resolve(sourceLink)
-    // let arrLink = await Promise.all([getDirectLink(o = {
-    //     url: 'http://mp3.zing.vn' + sourceLink['128']['link'],
-    //     headers: headers,
-    //     gzip: 'true'
-    // }),
-    // getDirectLink(o = {
-    //     url: 'http://mp3.zing.vn' + sourceLink['320']['link'],
-    //     headers: headers,
-    //     gzip: 'true'
-    // }),
-    // getDirectLink(o = {
-    //     url: 'http://mp3.zing.vn' + sourceLink['lossless']['link'],
-    //     headers: headers,
-    //     gzip: 'true'
-    // })])
-    // console.log(arrLink)
-    // return Promise.resolve(arrLink);
+    let arrLink = await Promise.all([getDirectLink(o = {
+        url: 'http://mp3.zing.vn' + sourceLink['128']['link'],
+        headers: headers,
+        gzip: 'true'
+    }),
+    getDirectLink(o = {
+        url: 'http://mp3.zing.vn' + sourceLink['320']['link'],
+        headers: headers,
+        gzip: 'true'
+    }),
+    getDirectLink(o = {
+        url: 'http://mp3.zing.vn' + sourceLink['lossless']['link'],
+        headers: headers,
+        gzip: 'true'
+    })])
+    console.log(arrLink)
+    return Promise.resolve(arrLink);
 
 }
 

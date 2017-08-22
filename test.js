@@ -1,5 +1,5 @@
 var request = require('request');
-var reqFast = require('req-fast')
+var reqFast = require('req-fast');
 var oriLink = 'http://mp3.zing.vn/bai-hat/Xin-Dung-Lang-Im-Soobin-Hoang-Son/ZW80B6I8.html'
 var MyHeaders = {
     'X-Requested-With': 'XMLHttpRequest',
@@ -11,9 +11,17 @@ var options = {
     headers: MyHeaders,
     gzip: 'true'
 };
-request(options, function (error, response, body) {
-    if (!error && response.statusCode == 200) {
-        let link = response.request["uri"]["href"]
-        console.log("GET DC LINK LA: " + link);
-    }
-});
+// request(options, function (error, response, body) {
+//     if (!error && response.statusCode == 200) {
+//         let link = response.request["uri"]["href"]
+//         console.log("GET DC LINK LA: " + link);
+//     }
+// });
+var op = {
+    url: 'http://mp3.zing.vn/download/song/Xin-Dung-Lang-Im-Soobin-Hoang-Son-Soobin-Hoang-Son/kHxmTkGagdFdadhtrOeeIofftbHkmTZpGBSHgXBL?sig=3394c0e72aed4d3bb2640a46d7d96fa2',
+    headers: MyHeaders,
+    maxRedirects: 1
+};
+reqFast(op, function(error, response){
+    console.log(response.redirects);
+})
