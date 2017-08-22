@@ -3,6 +3,7 @@ var app = express();
 var bodyParser = require('body-parser')
 var urlencodedParser = bodyParser.urlencoded({ extended: false })
 var request = require('request');
+var reqFast = require('req-fast');
 var MyHeaders = {
     'X-Requested-With': 'XMLHttpRequest',
     'Connection': 'keep-alive',
@@ -18,7 +19,7 @@ app.set("views", "./views");
 app.use(express.static(__dirname + '/views'))
 
 app.get("/test", function (req, res) {
-  
+
     async function sysnAll(oriLink, headers) {
         var options = {
             url: oriLink,
@@ -40,11 +41,32 @@ app.get("/test", function (req, res) {
         });
     }
     sysnAll('http://mp3.zing.vn/bai-hat/Lac-Nhau-Co-Phai-Muon-Doi-ERIK-ST319/ZW78D0FZ.html', MyHeaders);
-})
+});
 
-
-
-
+app.get("/apiget", function (req, res) {
+    var oriLink = req.query.link;
+    async function sysnAll(oriLink, headers) {
+        var options = {
+            url: oriLink,
+            headers: headers,
+            gzip: 'true'
+        };
+        let info = await getMp3Info(options);
+        let arrLink = await getMp3DownloadLink(options, headers);
+        console.log(info)
+        console.log("LINK: " + arrLink)
+        res.render("testPlayer", {
+            name: info['name'],
+            cover: info['cover'],
+            artist: info['artist'],
+            link128: arrLink[0],
+            link320: arrLink[1],
+            lossless: arrLink[2],
+            data: arrLink[0]
+        });
+    }
+    sysnAll(oriLink, MyHeaders);
+});
 
 app.get("/home", function (req, res) {
     res.render("test");
@@ -154,15 +176,19 @@ function getInfo(options) {
     });
 }
 
+
 function getDirectLink(options) {
     return new Promise((resolve, reject) => {
-        request(options, function (error, response, body) {
-            if (!error && response.statusCode == 200) {
-                let link = response.request["uri"]["href"]
-                //console.log("GET DC LINK LA: " + response.request["uri"]["href"]);
-                resolve(link);
-            }
-        });
+        var op = {
+            url: options.url,
+            headers: options.headers,
+            maxRedirects: 1
+        };
+        reqFast(op, function (error, response) {
+
+            resolve(response.redirects.toString());
+
+        })
     });
 }
 
