@@ -21,6 +21,7 @@ app.set("view engine", "ejs");
 app.set("views", "./views");
 app.use(express.static(__dirname + '/views'))
 
+/*
 app.get("/test", function (req, res) {
 
     async function sysnAll(oriLink, headers) {
@@ -45,6 +46,7 @@ app.get("/test", function (req, res) {
     }
     sysnAll('http://mp3.zing.vn/bai-hat/Lac-Nhau-Co-Phai-Muon-Doi-ERIK-ST319/ZW78D0FZ.html', MyHeaders);
 });
+*/
 
 app.get("/apiget", function (req, res) {
     var oriLink = req.query.link;
@@ -70,7 +72,6 @@ app.get("/apiget", function (req, res) {
     }
     sysnAll(oriLink, MyHeaders);
 });
-
 
 app.post('/apitest', function(req, res) {
     //var user_id = req.body.id;
@@ -103,58 +104,6 @@ app.post('/apitest', function(req, res) {
 app.get("/home", function (req, res) {
     res.render("home");
 })
-
-app.post('/post', function(req, res) {
-    res.send('Username: ' + req.body.username);
-})
-
-
-/*
-app.get("/link", function (req, res) {
-    var options = {
-        mode: 'text',
-        args: 'http://mp3.zing.vn/bai-hat/Xin-Dung-Lang-Im-Soobin-Hoang-Son/ZW80B6I8.html'
-        //args: linkToGet
-    };
-
-    PythonShell.run('get.py', options, function (err, message) {
-        if (err) throw err;
-        result = message[0];
-        //res.send("Link get được: "+ result.toString());
-        res.render("test", { data: result.toString() });
-        console.log('Kết quả: ', result);
-    });
-});
-
-app.get('/api', function (req, res) {
-    var linkToGet = req.query.link;
-
-    var options = {
-        //args: 'http://mp3.zing.vn/bai-hat/Xin-Dung-Lang-Im-Soobin-Hoang-Son/ZW80B6I8.html'
-        args: linkToGet
-    };
-
-    PythonShell.run('get.py', options, function (err, message) {
-        if (err) throw err;
-        // results is an array consisting of messages collected during execution
-        result = message[0];
-        res.send("Link get duoc: " + result);
-        console.log('results: ', result);
-    });
-
-});
-
-// POST /login gets urlencoded bodies
-
-/*
-app.get("/home", function(req, res) {
-    res.render("home");
-    console.log("Home page");
-
-});
-*/
-
-
 
 function getDowloadLink(options) {
     return new Promise((resolve, reject) => {
