@@ -1,9 +1,12 @@
 var express = require('express');
 var app = express();
-var bodyParser = require('body-parser')
-var urlencodedParser = bodyParser.urlencoded({ extended: false })
 var request = require('request');
 var reqFast = require('req-fast');
+
+var bodyParser = require('body-parser');
+app.use(bodyParser.json()); // support json encoded bodies
+app.use(bodyParser.urlencoded({ extended: true })); // support encoded bodies
+
 var MyHeaders = {
     'X-Requested-With': 'XMLHttpRequest',
     'Connection': 'keep-alive',
@@ -68,10 +71,42 @@ app.get("/apiget", function (req, res) {
     sysnAll(oriLink, MyHeaders);
 });
 
+
+app.post('/apitest', function(req, res) {
+    //var user_id = req.body.id;
+    var oriLink = req.body.link;
+    async function sysnAll(oriLink, headers) {
+        var options = {
+            url: oriLink,
+            headers: headers,
+            gzip: 'true'
+        };
+        let info = await getMp3Info(options);
+        let arrLink = await getMp3DownloadLink(options, headers);
+        //console.log(info)
+        //console.log("LINK: " + arrLink)
+        console.log("POST LINK: " +oriLink);
+        res.render("testPlayer", {
+            name: info['name'],
+            cover: info['cover'],
+            artist: info['artist'],
+            link128: arrLink[0],
+            link320: arrLink[1],
+            lossless: arrLink[2],
+            data: arrLink[0]
+        });
+    }
+    sysnAll(oriLink, MyHeaders);
+   
+});
+
 app.get("/home", function (req, res) {
-    res.render("test");
+    res.render("home");
 })
 
+app.post('/post', function(req, res) {
+    res.send('Username: ' + req.body.username);
+})
 
 
 /*

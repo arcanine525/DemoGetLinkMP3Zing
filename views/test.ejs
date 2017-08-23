@@ -3,27 +3,10 @@
 
 <body>
 
-    <h2>JavaScript Can Validate Input</h2>
-
-    <p>Please input a number between 1 and 10:</p>
-
-    <input id="numb">
-
-    <button type="button" onclick="myFunction()">Submit</button>
-
-    <p id="demo"></p>
-
-    <script>    
-        function myFunction() {
-            var oriLink, text;
-
-            // Get the value of the input field with id="numb"
-            oriLink = document.getElementById("numb").value;
-            document.getElementById('demo').innerHTML =oriLink;
-
-
-        }
-    </script>
+    <form method="post" action="/apitest">
+        <input type="text" name="link">
+        <input type="submit">
+    </form>
 
 </body>
 

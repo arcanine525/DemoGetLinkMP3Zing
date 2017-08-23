@@ -1,95 +1,156 @@
-<!DOCTYPE html>
-<html>
+<link href='https://fonts.googleapis.com/css?family=Lato' rel='stylesheet' type='text/css'>
+<style>
+    body {
+        font-family: 'Lato', georgia;
+        font-size: 25px;
+        color: rgba(255, 255, 255, 1);
+        background-color: rgb(71, 117, 209);
+        text-align: center;
+        font-weight: 300;
+        -webkit-font-smoothing: antialiased;
+    }
 
-<head>
-    <meta charset="UTF-8">
-    <title>APlayer Demo</title>
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <style>
-        body {
-            font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif;
-        }
+    #contact-form {
+        max-width: 90%;
+        margin: 0 auto;
+    }
 
-        .container {
-            max-width: 32rem;
-            margin-left: auto;
-            margin-right: auto;
-            margin-bottom: 50px;
-        }
+    textarea,
+    input {
+        border: none;
+        outline: none;
+        border-radius: 0;
+        text-align: center;
+        background: none;
+        font-weight: 700;
+        font-family: 'Lato', georgia;
+        font-size: 25px;
+        color: rgba(255, 255, 255, 1);
+        max-width: 90%;
+        padding: 1rem;
+        border: 2px dashed rgba(255, 255, 255, 0);
+        box-sizing: border-box;
+        cursor: text;
+    }
 
-        h1 {
-            font-size: 54px;
-            color: #333;
-            margin: 30px 0 10px;
-        }
+    textarea {
+        text-align: left;
+        /* overflow:hidden; */
+        resize: none;
+        width: 90%;
+        border-color: rgba(255, 255, 255, 0)
+    }
 
-        h2 {
-            font-size: 22px;
-            color: #555;
-        }
+    textarea:focus {
+        background-color: rgba(255, 255, 255, 0.2);
+        border: 2px dashed rgba(255, 255, 255, 1);
+    }
 
-        h3 {
-            font-size: 24px;
-            color: #555;
-        }
+    textarea:focus:required:valid {
+        border: 2px solid rgba(255, 255, 255, 0);
+        border-bottom: 2px solid rgba(255, 255, 255, 0.2);
+    }
 
-        hr {
-            display: block;
-            width: 7rem;
-            height: 1px;
-            margin: 2.5rem 0;
-            background-color: #eee;
-            border: 0;
-        }
+    textarea:required:valid {
+        border-bottom: 2px solid rgba(255, 255, 255, 0.2);
+    }
 
-        a {
-            color: #08c;
-            text-decoration: none;
-        }
+    input {
+        border-bottom: 2px dashed rgba(255, 255, 255, 0.5);
+    }
 
-        p {
-            font-size: 18px;
-        }
-    </style>
-</head>
+    input:required,
+    textarea:required {
+        border-bottom: 2px dashed rgba(255, 255, 255, 0.5);
+    }
+
+    input:focus {
+        border-bottom: 2px dashed rgba(255, 255, 255, 1);
+        background-color: rgba(255, 255, 255, 0.2);
+    }
+
+    input:required:valid {
+        border-bottom: 2px solid rgba(255, 255, 255, 0.2);
+    }
+
+    input:required:invalid {
+        color: rgba(255, 255, 255, 0.5);
+    }
+
+     ::-webkit-input-placeholder {
+        text-align: center;
+        color: rgba(255, 255, 255, 0.4);
+        font-style: italic;
+        font-weight: 400;
+    }
+
+     :-moz-placeholder {
+        /* Firefox 18- */
+        text-align: center;
+        color: rgba(255, 255, 255, 0.4);
+        font-style: italic;
+        font-weight: 400;
+    }
+
+     ::-moz-placeholder {
+        /* Firefox 19+ */
+        text-align: center;
+        color: rgba(255, 255, 255, 0.4);
+        font-style: italic;
+        font-weight: 400;
+    }
+
+     :-ms-input-placeholder {
+        text-align: center;
+        color: rgba(255, 255, 255, 0.4);
+        font-style: italic;
+        font-weight: 400;
+    }
+
+    .expanding {
+        vertical-align: top;
+    }
+
+    .send-icn {
+        fill: rgba(255, 255, 255, 1)
+    }
+
+    .send-icn:hover {
+        fill: rgba(0, 0, 0, 1);
+        cursor: pointer;
+    }
+
+    button {
+        background: none;
+        border: none;
+        outline: none;
+        margin: 2vmax;
+    }
+
+    button:hover small {
+        opacity: 1;
+    }
+
+    small {
+        display: block;
+        opacity: 0;
+    }
+</style>
 
 
-<body>
-    <div class="container">
-        <h1>
-            <%=data%>
-        </h1>
-        <h2>Wow,</h2>
-
-        <hr>
-        <h3>l128</h3>
-        <div id="player1" class="aplayer"></div>
-        <p></p>
-
-    </div>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/aplayer/1.6.0/APlayer.min.js"></script>
-    
-    <script>
-        var data = "<%=link128%>";
-        var dat128 = 'http://zmp3-mp3-s1-te-zmp3-bdhcm-1.zadn.vn/3cedeac33387dad98396/8127820420268223686?key=c5Fl0Q1cc2DalLKJDZ9vPQ&expires=1502521790'
-        var ap1 = new APlayer({
-            element: document.getElementById('player1'),
-            narrow: false,
-            autoplay: true,
-            showlrc: false,
-            mutex: true,
-            theme: '#e6d0b2',
-            preload: 'metadata',
-            mode: 'circulation',
-            music: {
-                title: 'Preparation',
-                author: 'Hans Zimmer/Richard Harvey',
-                url: data,
-                pic: 'http://devtest.qiniudn.com/Preparation.jpg'
-            }
-        });
-    </script>
-
-</body>
-
-</html>
+<form id="contact-form" method="post" action="/apitest">
+    <p>Hello,</p>
+    <p>Get link Zing MP3
+        <p>
+            <textarea name="link" id="link" placeholder="(your link here)" class="expanding" required></textarea>
+        </p>
+        <p>
+            <button type="submit">
+      <svg version="1.1" class="send-icn" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px" width="100px" height="36px" viewBox="0 0 100 36" enable-background="new 0 0 100 36" xml:space="preserve">
+        <path d="M100,0L100,0 M23.8,7.1L100,0L40.9,36l-4.7-7.5L22,34.8l-4-11L0,30.5L16.4,8.7l5.4,15L23,7L23.8,7.1z M16.8,20.4l-1.5-4.3
+	l-5.1,6.7L16.8,20.4z M34.4,25.4l-8.1-13.1L25,29.6L34.4,25.4z M35.2,13.2l8.1,13.1L70,9.9L35.2,13.2z" />
+      </svg>
+      <small>get</small>
+    </button>
+        </p>
+</form>
